@@ -1,0 +1,15 @@
+.test_lottie {
+    width: min-content;
+    display: block;
+    width: 700px;
+    height: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.whyandae {
+    text-align: center;
+    font-size: 30px;
+    color: rgb(245, 245, 245);
+}
+

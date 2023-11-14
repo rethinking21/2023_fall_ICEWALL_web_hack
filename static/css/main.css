@@ -1,0 +1,21 @@
+body
+{
+    transition: all 1s ease-in-out;
+    margin: 0 auto;
+    width: 400px;
+}
+
+h1
+{
+    text-align: center;
+}
+
+.slider
+{
+    width: 100%;
+}
+
+.main-background
+{
+    background-color: rgb(223, 249, 255);
+}
