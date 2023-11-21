@@ -2,6 +2,7 @@
 <html>
 <head>
     {% include "fix/source.html" %}
+    <link href="{{url_for('static', filename='css/post/post_detail.css')}}" rel="stylesheet">
     {% include 'fix//flash_message.html' %}
     <title>post</title>
 </head>
@@ -9,6 +10,19 @@
     {% include "fix/header.html" %}
     <main>
         <h1>{{post.title}}</h1>
+        <div class="post-infos">
+            <div class="post-info detail-info">
+                작성자: 
+                {% if post.user %}
+                    {{ post.user.username }}
+                {% else %}
+                    없음
+                {% endif %}
+            </div>
+            <div class="post-info detail-info">
+                / 글쓴 시간 : {{post.datetime}}
+            </div>
+        </div>
         <hr>
         <div class="post-content">
             {{post.content}}
@@ -18,15 +32,14 @@
             <ul style="border: 1px solid gray;">
                 {% for comment in post.comment_set %}
                 <li>
-                    {{comment.content}}
-                    <div class="comment-user" style="color: gray; display: inline-block;">
-                        -
+                    <div class="comment-user detail-info">
                         {% if comment.user %}
                             {{ comment.user.username }}
                         {% else %}
                             작성자 없음
-                        {% endif %}
+                        {% endif %} ({{comment.datetime}}) :
                     </div>
+                    {{comment.content}}
                 </li>
                 {% endfor %}
             </ul>
