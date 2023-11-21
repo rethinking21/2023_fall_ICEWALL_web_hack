@@ -14,7 +14,7 @@ axios.get('/getsessiondata/username')
         button.innerText = "logout";
     }
     else{
-        document.getElementById("header-user").innerHTML = '';
+        document.getElementById("header-user").innerHTML = 'please login';
         button.onclick = function() {
           location.href = '/login/';
         };
@@ -23,7 +23,7 @@ axios.get('/getsessiondata/username')
     document.getElementById("header-right-btn").appendChild(button);
   })
   .catch(function (error) {
-    document.getElementById("header-user").innerHTML = '';
+    document.getElementById("header-user").innerHTML = 'please login';
     button.onclick = function() {
       location.href = '/login/';
     };

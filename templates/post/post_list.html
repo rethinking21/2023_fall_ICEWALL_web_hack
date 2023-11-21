@@ -2,7 +2,8 @@
 <html>
 <head>
     {% include "fix/source.html" %}
-    {% include '/flash_message.html' %}
+    <link href="{{url_for('static', filename='css/post/post_list.css')}}" rel="stylesheet">
+    {% include 'fix//flash_message.html' %}
     <title>post</title>
 </head>
 <body class="main-background" id="full-background">
@@ -10,23 +11,23 @@
     <main>
         <div class="container">
             <br>
-            <h1>게시판</h1>
+            <h1>🍿게시판🍿</h1>
             <br>
 
-            <table style="border: 1px solid;">
+            <table class="post-list-table">
                 <thead>
                     <tr>
                         <th>번호</th>
-                        <th>제목</th>
+                        <th style="text-align: left;">제목</th>
                         <th>작성날짜</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody style="vertical-align: top;">
                     {% for i in post_list %}
                     <tr>
-                        <td>{{i.id}}</td>
+                        <td style="width: 50px; text-align: center;">{{i.id}}</td>
                         <td><a href='/detail/{{i.id}}'>{{i.title}}</a></td>
-                        <td>{{i.datetime}}</td>
+                        <td style="width: 240px; text-align: center;">{{i.datetime}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -34,6 +35,7 @@
             <hr>
             <button type="button" onclick="location.href='/post'">글쓰기</button>
         </div>
+        <br>
     </main>
     {% include "fix/footer.html" %}
 </body>

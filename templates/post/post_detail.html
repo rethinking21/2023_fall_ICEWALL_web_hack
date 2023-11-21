@@ -2,14 +2,14 @@
 <html>
 <head>
     {% include "fix/source.html" %}
-    {% include '/flash_message.html' %}
+    {% include 'fix//flash_message.html' %}
     <title>post</title>
 </head>
 <body class="main-background" id="full-background">
     {% include "fix/header.html" %}
     <main>
         <h1>{{post.title}}</h1>
-        <div>
+        <div class="post-content">
             {{post.content}}
         </div>
         <div>

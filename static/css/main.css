@@ -42,12 +42,19 @@ main
     text-align: center;
 }
 
-#header-right-btn{
-    margin-left: 10px;
+
+.header-menu-divide{
+    border-left: 1px solid gray;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 #main-background{
     margin: 0;
+}
+
+.h1-title{
+    text-align: center;
 }
 
 .slider
@@ -63,4 +70,12 @@ main
 
 .center{
     margin: 0 auto;
+}
+
+.form-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px; /* 필요에 따라 마진 설정을 조절할 수 있습니다. */
 }

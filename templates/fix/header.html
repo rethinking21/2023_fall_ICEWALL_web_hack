@@ -1,13 +1,19 @@
 <header>
-    <h1 id="header-logo">Team 6</h1>
-    <nav>
-        <span>write</span>
-        <span>read</span>
+    <h1 id="header-logo">
+        <a href="/" style="text-decoration: none; color: white;">Team 6</a>
+    </h1>
+    <nav class="header-menu-divide">
+        <span>
+            <a href="/post" style="text-decoration: none; color: white;">✍️write</a>
+        </span>
+        <span>
+            <a href="/post_list" style="text-decoration: none; color: white;">📜lists</a>
+        </span>
     </nav>
-    <div style="padding-left: 10px;">
+    <div class="header-menu-divide">
         <span id="header-user"></span>
     </div>
-    <div id="header-right-btn">
+    <div id="header-right-btn" class="header-menu-divide">
     </div>
 
     <script src="{{ url_for('static', filename='js/header_check_user.js') }}"></script>

@@ -15,6 +15,10 @@ def hello():
     
 @app.route('/signup/', methods=['GET', 'POST'])
 def signup():
+    if 'username' in session:
+        flash("로그아웃 후 사용해주세요")
+        return redirect('/')
+
     if request.method == "POST":
         username = request.form.get('username')
         password = request.form.get('password')
@@ -49,6 +53,10 @@ def get_session_data(key):
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
+    if 'username' in session:
+        flash("로그아웃 후 사용해주세요")
+        return redirect('/')
+
     if request.method == "POST":
         username = request.form.get('username')
         password = request.form.get('password')
@@ -81,12 +89,17 @@ def logout():
 
 @app.route('/post/', methods=['GET', 'POST'])
 def post():
+    if 'username' not in session:
+        flash("로그인 후 접속 가능합니다.")
+        return redirect('/login/')
+    
     if request.method == "POST":
         title = request.form.get('title')
         content = request.form.get('content')
 
         if not(title and content):
-            return "입력되지 않은 정보가 있습니다."
+            flash("입력되지 않은 정보가 있습니다.")
+            return redirect('/post/')
         else:
             posttable = Post()
             posttable.title = title
@@ -96,21 +109,33 @@ def post():
             db.session.commit()
             return redirect('/post_list')
     else:
-        return render_template('post.html')
+        return render_template('post/post.html')
             
 
 @app.route('/post_list/', methods=['GET', 'POST'])
 def post_list():
+    if 'username' not in session:
+        flash("로그인 후 접속 가능합니다.")
+        return redirect('/login/')
+    
     post_list = Post.query.order_by(Post.datetime.asc())
-    return render_template("post_list.html", post_list=post_list)
+    return render_template("post/post_list.html", post_list=post_list)
 
 @app.route('/detail/<int:post_id>')
 def detail(post_id):
+    if 'username' not in session:
+        flash("로그인 후 접속 가능합니다.")
+        return redirect('/login/')
+    
     post = Post.query.get_or_404(post_id)
-    return render_template("post_detail.html", post=post)
+    return render_template("post/post_detail.html", post=post)
 
 @app.route('/delete/<int:post_id>')
 def delete(post_id):
+    if 'username' not in session:
+        flash("로그인 후 접속 가능합니다.")
+        return redirect('/login/')
+    
     post = Post.query.get_or_404(post_id)
     db.session.delete(post)
     db.session.commit()
@@ -118,6 +143,10 @@ def delete(post_id):
 
 @app.route('/detail/<int:post_id>/comment/', methods=['GET', 'POST'])
 def comment(post_id):
+    if 'username' not in session:
+        flash("로그인 후 접속 가능합니다.")
+        return redirect('/login/')
+
     if request.method == "POST":
         content = request.form.get('content')
 
@@ -131,7 +160,7 @@ def comment(post_id):
         db.session.commit()
         return redirect(url_for('detail', post_id=post_id))
     else:
-        return render_template("comment.html")
+        return render_template("post/comment.html")
 
 
 @app.errorhandler(404)
