@@ -150,6 +150,9 @@ def delete(post_id):
     if post is None:
         flash("삭제할 게시물을 찾을 수 없습니다.")
         return redirect('/post_list/')
+    elif post.user_id != session['user_id']:
+        flash("글 작성자가 아닙니다")
+        return redirect(f'/detail/{post_id}')
     
     db.session.delete(post)
     db.session.commit()
