@@ -69,6 +69,7 @@ def login():
             if user:
                 if user.password == password:
                     session['username'] = username
+                    session['user_id'] = user.id
                     return redirect('/')
                 else:
                     flash("비밀번호가 다릅니다.")
@@ -85,11 +86,12 @@ def logout():
         flash("정상적인 요청이 아닙니다.")
     else:
         session.pop('username', None)
+        session.pop('user_id', None)
     return redirect('/')
 
 @app.route('/post/', methods=['GET', 'POST'])
 def post():
-    if 'username' not in session:
+    if 'username' not in session or 'user_id' not in session:
         flash("로그인 후 접속 가능합니다.")
         return redirect('/login/')
     
@@ -104,6 +106,14 @@ def post():
             posttable = Post()
             posttable.title = title
             posttable.content = content
+            # dangerous
+            user = User.query.get_or_404(session['user_id'])
+            if user:
+                posttable.user = user
+                posttable.user_id = user.id
+            else:
+                posttable.user = None
+                posttable.user_id = None
 
             db.session.add(posttable)
             db.session.commit()
@@ -130,13 +140,17 @@ def detail(post_id):
     post = Post.query.get_or_404(post_id)
     return render_template("post/post_detail.html", post=post)
 
-@app.route('/delete/<int:post_id>')
+@app.route('/delete/<int:post_id>/')
 def delete(post_id):
     if 'username' not in session:
         flash("로그인 후 접속 가능합니다.")
         return redirect('/login/')
+    post = Post.query.get(post_id)
+    # post = Post.query.get_or_404(post_id)
+    if post is None:
+        flash("삭제할 게시물을 찾을 수 없습니다.")
+        return redirect('/post_list/')
     
-    post = Post.query.get_or_404(post_id)
     db.session.delete(post)
     db.session.commit()
     return redirect('/post_list/')
@@ -155,6 +169,15 @@ def comment(post_id):
         comment.content = content
         comment.post = post
         comment.post_id = post_id
+    
+        # dangerous
+        user = User.query.get_or_404(session['user_id'])
+        if user:
+            comment.user = user
+            comment.user_id = user.id
+        else:
+            comment.user = None
+            comment.user_id = None
         
         db.session.add(comment)
         db.session.commit()

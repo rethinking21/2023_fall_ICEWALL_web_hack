@@ -19,6 +19,7 @@
                     <tr>
                         <th>번호</th>
                         <th style="text-align: left;">제목</th>
+                        <th>작성자</th>
                         <th>작성날짜</th>
                     </tr>
                 </thead>
@@ -27,6 +28,13 @@
                     <tr>
                         <td style="width: 50px; text-align: center;">{{i.id}}</td>
                         <td><a href='/detail/{{i.id}}'>{{i.title}}</a></td>
+                        <td style="width: 70px; text-align: center;">
+                            {% if i.user %}
+                                {{ i.user.username }}
+                            {% else %}
+                                작성자 없음
+                            {% endif %}
+                        </td>
                         <td style="width: 240px; text-align: center;">{{i.datetime}}</td>
                     </tr>
                     {% endfor %}

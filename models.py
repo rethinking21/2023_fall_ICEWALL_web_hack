@@ -19,6 +19,9 @@ class Post(db.Model):
     title = db.Column(db.String(50))
     content = db.Column(db.String(1000))
     datetime = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
+    
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="SET NULL"), nullable=True)
+    user = db.relationship('User', backref=db.backref('post_user_set'))
 
 class Comment(db.Model):
     __tablename__ = 'comment'
@@ -26,6 +29,10 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id', ondelete="CASCADE"))
     post = db.relationship('Post', backref=db.backref('comment_set'))
+
     content = db.Column(db.Text(), nullable=False)
     datetime = db.Column(db.DateTime(), default=datetime.now(), onupdate=datetime.now())
+    
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="SET NULL"), nullable=True)
+    user = db.relationship('User', backref=db.backref('comment_user_set'))
     

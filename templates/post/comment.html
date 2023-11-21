@@ -2,6 +2,7 @@
 <html>
 <head>
     {% include "fix/source.html" %}
+    <link href="{{url_for('static', filename='css/post/post.css')}}" rel="stylesheet">
     {% include 'fix/flash_message.html' %}
     <title>post</title>
 </head>
@@ -18,7 +19,7 @@
                 <form method="POST" action=".">
                     <div class="form-group">
                         <label for="content">댓글 내용</label>
-                        <textarea id="content" name="content" class="form-control"></textarea>
+                        <textarea id="content" name="content" class="form-control form-write"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">제출</button>
                 </form>

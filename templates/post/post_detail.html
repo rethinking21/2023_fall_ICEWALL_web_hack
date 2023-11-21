@@ -9,19 +9,30 @@
     {% include "fix/header.html" %}
     <main>
         <h1>{{post.title}}</h1>
+        <hr>
         <div class="post-content">
             {{post.content}}
         </div>
         <div>
-            <ul>
+            <h2>댓글 목록</h2>
+            <ul style="border: 1px solid gray;">
                 {% for comment in post.comment_set %}
-                <li>{{comment.content}}</li>
+                <li>
+                    {{comment.content}}
+                    <div class="comment-user" style="color: gray; display: inline-block;">
+                        -
+                        {% if comment.user %}
+                            {{ comment.user.username }}
+                        {% else %}
+                            작성자 없음
+                        {% endif %}
+                    </div>
+                </li>
                 {% endfor %}
             </ul>
         </div>
 
         <a href="/detail/{{post.id}}/comment/">댓글 등록</a>
-        <br>
         <a href="/delete/{{post.id}}/">삭제</a>
     </main>
     {% include "fix/footer.html" %}
