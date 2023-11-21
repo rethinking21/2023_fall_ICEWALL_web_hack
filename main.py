@@ -1,7 +1,7 @@
 import os.path
 import platform
-from flask import Flask, render_template, request, redirect, session, flash
-from models import db, User
+from flask import Flask, render_template, request, redirect, session, flash, url_for
+from models import db, User, Post, Comment
 app = Flask(__name__)
 
 
@@ -11,8 +11,8 @@ def hello():
         return redirect('/login/')
     else:
         username = session['username']
-        return render_template("index.html")
-
+        return render_template("index.html", user_name=username)
+    
 @app.route('/signup/', methods=['GET', 'POST'])
 def signup():
     if request.method == "POST":
@@ -21,6 +21,9 @@ def signup():
 
         if not username or not password:
             flash("사용자 이름이나 비밀번호가 입력되지 않았습니다.")
+            return render_template("signup.html")
+        elif username == 'null':
+            flash("사용자 이름이 적절하지 않습니다.")
             return render_template("signup.html")
         else:
             usertable = User()
@@ -35,6 +38,14 @@ def signup():
     else:
         return render_template("signup.html")
 
+@app.route('/getsessiondata/<key>')
+def get_session_data(key):
+    try:
+        res = session[key]
+    except KeyError:
+        return 'null'
+    else:
+        return res
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
@@ -59,6 +70,68 @@ def login():
                 return render_template("login.html")
     else:
         return render_template("login.html")
+
+@app.route("/logout/")
+def logout():
+    if 'username' not in session:
+        flash("정상적인 요청이 아닙니다.")
+    else:
+        session.pop('username', None)
+    return redirect('/')
+
+@app.route('/post/', methods=['GET', 'POST'])
+def post():
+    if request.method == "POST":
+        title = request.form.get('title')
+        content = request.form.get('content')
+
+        if not(title and content):
+            return "입력되지 않은 정보가 있습니다."
+        else:
+            posttable = Post()
+            posttable.title = title
+            posttable.content = content
+
+            db.session.add(posttable)
+            db.session.commit()
+            return redirect('/post_list')
+    else:
+        return render_template('post.html')
+            
+
+@app.route('/post_list/', methods=['GET', 'POST'])
+def post_list():
+    post_list = Post.query.order_by(Post.datetime.asc())
+    return render_template("post_list.html", post_list=post_list)
+
+@app.route('/detail/<int:post_id>')
+def detail(post_id):
+    post = Post.query.get_or_404(post_id)
+    return render_template("post_detail.html", post=post)
+
+@app.route('/delete/<int:post_id>')
+def delete(post_id):
+    post = Post.query.get_or_404(post_id)
+    db.session.delete(post)
+    db.session.commit()
+    return redirect('/post_list/')
+
+@app.route('/detail/<int:post_id>/comment/', methods=['GET', 'POST'])
+def comment(post_id):
+    if request.method == "POST":
+        content = request.form.get('content')
+
+        post = Post.query.get_or_404(post_id)
+        comment = Comment()
+        comment.content = content
+        comment.post = post
+        comment.post_id = post_id
+        
+        db.session.add(comment)
+        db.session.commit()
+        return redirect(url_for('detail', post_id=post_id))
+    else:
+        return render_template("comment.html")
 
 
 @app.errorhandler(404)

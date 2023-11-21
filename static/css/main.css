@@ -1,13 +1,53 @@
-body
+body{
+    margin: 0 auto;
+}
+
+footer, header{
+    display: flex;
+    margin: 0 auto;
+    padding: 1rem ;
+    text-align: center;
+}
+
+
+header{
+    height: 50px;
+    align-items: center;
+    color: white;
+    background: #0e4b84;
+    border-bottom: 1px solid whitesmoke;
+    justify-content: space-between;
+}
+
+footer{
+    color: white;
+    background: #898C8E;
+    text-align: center;
+}
+
+main
 {
     transition: all 1s ease-in-out;
     margin: 0 auto;
-    width: 400px;
+    min-width: 400px;
+    min-height: 100vw;
+    width: 80vw;
 }
 
-h1
-{
+
+#header-logo{
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 0;
     text-align: center;
+}
+
+#header-right-btn{
+    margin-left: 10px;
+}
+
+#main-background{
+    margin: 0;
 }
 
 .slider
@@ -17,5 +57,10 @@ h1
 
 .main-background
 {
-    background-color: rgb(223, 249, 255);
+    background-color: rgb(238, 242, 242);
+    padding-inline-start: 0px;
+}
+
+.center{
+    margin: 0 auto;
 }

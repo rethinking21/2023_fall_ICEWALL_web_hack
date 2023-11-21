@@ -1,43 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
+    {% include "fix/source.html" %}
     {% include '/flash_message.html' %}
-    <meta charset="UTF-8">
     <title>signup</title>
-    <link href="{{url_for('static', filename='css/main.css')}}" rel="stylesheet">
-    <link href="../static/css/main.css" rel="stylesheet">
-
-    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </head>
 <body class="main-background" id="full-background">
-    <div class="container">
-        <div class="row mt-5">
-            <h1>로그인</h1>
+    {% include "fix/header.html" %}
+    <main>
+        <div class="container">
+            <div class="row mt-5">
+                <h1>로그인</h1>
+            </div>
+            <lottie-player class = "center"
+                src="https://lottie.host/47b140c9-814a-451c-8c0b-01674e1b7a70/4bJP44iC34.json"
+                background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></lottie-player>
+    
+            <div class="col-12">
+                <form method="POST" action=".">
+                    <div class="form-group">
+                        <label for="username">사용자 이름</label>
+                        <input type="text" class="form-control" id="username" placeholder="사용자 이름" name="username"/>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="password">비밀번호</label>
+                        <input type="text" class="form-control" id="password" placeholder="비밀번호" name="password"/>
+                    </div>
+                    <button type="submit" class="btn btn-primary">제출</button>
+                </form>
+                    <button onclick="location.href='/signup/'" class="btn">회원가입</button>
+                    <button onclick="location.href='/'">돌아가기</button>
+            </div>
         </div>
-
-
-        <button onclick="location.href='/'">돌아가기</button>
-
-        <lottie-player src="https://lottie.host/47b140c9-814a-451c-8c0b-01674e1b7a70/4bJP44iC34.json"
-                       background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></lottie-player>
-
-        <div class="col-12">
-            <br><br>
-            <form method="POST" action=".">
-                <div class="form-group">
-                    <label for="username">사용자 이름</label>
-                    <input type="text" class="form-control" id="username" placeholder="사용자 이름" name="username"/>
-                </div>
-
-                <div class="form-group">
-                    <label for="password">비밀번호</label>
-                    <input type="text" class="form-control" id="password" placeholder="비밀번호" name="password"/>
-                </div>
-                <button type="submit" class="btn btn-primary">제출</button>
-            </form>
-            <button onclick="location.href='/signup/'">회원가입</button>
-        </div>
-    </div>
+    </main>
+    {% include "fix/footer.html" %}
 </body>
 </html>

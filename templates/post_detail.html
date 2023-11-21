@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include "fix/source.html" %}
+    {% include '/flash_message.html' %}
+    <title>post</title>
+</head>
+<body class="main-background" id="full-background">
+    {% include "fix/header.html" %}
+    <main>
+        <h1>{{post.title}}</h1>
+        <div>
+            {{post.content}}
+        </div>
+        <div>
+            <ul>
+                {% for comment in post.comment_set %}
+                <li>{{comment.content}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <a href="/detail/{{post.id}}/comment/">댓글 등록</a>
+        <br>
+        <a href="/delete/{{post.id}}/">삭제</a>
+    </main>
+    {% include "fix/footer.html" %}
+</body>
+</html>
